@@ -16,6 +16,7 @@ int HashTable::AddValue(string identifier)
 	if (size / capacity > 0.7)
 	{
 		capacity *= 2;
+		size = 0;
 
 		vector<string> copy_arr;
 		copy_arr.assign(capacity/2, ""); 
@@ -27,8 +28,9 @@ int HashTable::AddValue(string identifier)
 
 		arr.assign(capacity, ""); // double capacity
 
-		for (int i = 0; i < capacity/2; i++) // reassigning
-			arr[i] = copy_arr[i];
+		for (int i = 0; i < capacity / 2; i++) // reassigning
+			AddValue(copy_arr[i]);
+			//arr[i] = copy_arr[i];
 
 	}
 

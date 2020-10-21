@@ -1,0 +1,16 @@
+let x : integer ;  
+let y : integer ; 
+read ( "Give x=" , x ) ; 
+read ( "Give y =" , y ) ; 
+let res : integer ; 
+
+let r :  integer ; 
+while ( y != -3 ) 
+{ 
+  r = x % y ; 
+  x = y ; 
+  y =  r ; 
+} 
+res = x ; 
+write ( "The result is" , res ) ; 
+
