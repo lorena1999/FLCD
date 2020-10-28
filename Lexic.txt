@@ -1,0 +1,112 @@
+Lexic.txt: 
+
+	a) Upper (A-Z) and lower case letters (a-z) of the Enlish alphabet
+	b) special character: '_'
+	c) Decimal digits (0-9)
+	d) Escape character: '\'
+	
+	1.Lexic:
+		a) Special symbols, representing:
+	- operators + - * / == = < > <= >= : ++ -- && || ! 
+	- bitwise operators: >> << ~ & | ^
+	- separators [] {} ; space
+	- literals: true false
+	- reserved words: 
+		if else while function boolean integer char double write read let 
+		
+		b) identifiers
+		- a sequence of letters and digits such that the first character is a letter; the rule is:
+	identifier = letter{letter | digit}
+	letter = "a" | "b" | "c" | ... | "z" | "A" | "B" | ... | "Z"
+	digit = "0" | "1" | ... | "9"
+		
+		c) constants
+	1. integer - rules: - every number can be either positive or negative or unsigned
+			   - any number of more than one digit can't start with 0
+			   - 0 is always unsigned 
+	
+	nzDigit = "1" | "2" | ... | "9". 
+	IntNo = "0" | ["+"|"-"] nzDigit {"0" | nzDigit}. 
+
+	2. double -rules: - every double number can be either positive or negative or unsigned
+			  - any number which has its integer part 0 is always unsigned
+	rules:
+
+	intNo = 0 | number | sign number
+
+	number = nzDigit | nzDigit digitSequence
+
+	digitSequence = digit | digit digitSequence
+
+	nzDigit = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
+
+	digit = 0 | nzDigit
+
+	sign = - | + 
+
+	double = "0." digitSequence | sign nzDigit digitSequence "." digitSequence
+
+	2. characters - rules: - a character is formed either by a digit or by a letter or by a special character
+	
+	character = 'letter' | 'digit' | 'special_characters'
+	special_symbol = "_" 
+
+	3. string - rules: - a string is a sequence of zero or more characters (this include the null string)
+		string_const = " \" " {letter | digit | special_symbol} " \" " 	
+
+
+
+
+Syntax.in:
+
+
+Syntax: 
+	The words - predifined tokens are specified between " and "
+	The single characters - constant characters are specified between ' and '
+
+	constant = IntNo | character | string_const | double
+	
+	Declaration rule:
+declaration = "let" identifier ":" type {"[" nr "]"}
+type = "boolean" | "integer" | "double" | "char"
+
+	program = declaration {declaration} ";" cmpd_stmt ";" 
+
+	IO_stmt rule: "read" "(" [const_string ","] identifier ")" ";" | "write" "(" ( [const_string ","] identifier ")" | constant ) ")" ";"
+
+	if_stmt rule: "if" condition stmt ["else" stmt]
+	condition = expression relation expression
+
+	expression = expression ("+" | "-") term | term
+	relation = "<" | "<=" | "==" | ">" | ">="
+	
+	term = term "*" factor | factor
+	factor = "(" expression ")" | "(" identifier ")" | "(" constant ")"
+
+	while_stmt = "while" "(" condition ")" "{" stmt "}"
+	
+	stmt = simpl_stmt | struct_stmt
+
+	simpl_stmt =  assign_stmt |  IO_stmt 
+	assign_stmt = identifier "=" expression ";"
+
+	struct_stmt = cmpd_stmt | if_stmt | while_stmt
+
+	cmpd_stmt = "{" stmt_list "}"
+	stmt_list = stmt {stmt} 
+	
+
+
+Token.in:
+	reserved words: if else while function boolean integer char double write read let 
+	bitwise operators: >> << ~ & | ^ 
+	unary operators: !
+	relational operators: == = < > <= >= 
+	logical operators: && || 
+	arithmetic operations: ++ -- + - * /
+	special character: '_'
+	literals: true false
+	separators [] {} ; : space . 
+
+
+	
