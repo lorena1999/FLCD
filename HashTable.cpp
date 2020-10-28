@@ -13,6 +13,12 @@ HashTable::HashTable()
 
 int HashTable::AddValue(string identifier)
 {
+	int fv = FindValue(identifier);
+	if (fv != -1)
+	{
+		return fv;
+	}
+
 	if (size / capacity > 0.7)
 	{
 		capacity *= 2;
@@ -30,7 +36,6 @@ int HashTable::AddValue(string identifier)
 
 		for (int i = 0; i < capacity / 2; i++) // reassigning
 			AddValue(copy_arr[i]);
-			//arr[i] = copy_arr[i];
 
 	}
 
@@ -73,6 +78,18 @@ int HashTable::FindValue(string key)
 
 	return -1;
 
+}
+
+void HashTable::printTable()
+{
+	cout << endl << "Symbol Table: " << endl << endl;
+	for (int i = 0; i < capacity; i++)
+	{
+		if (arr[i] != "")
+		{
+			cout << arr[i] << " " << Hash(arr[i]) << endl;
+		}
+	}
 }
 
 int HashTable::Hash(string key) // ascii sum of the given string modulo capacity

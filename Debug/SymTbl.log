@@ -1,5 +1,6 @@
-﻿  main.cpp
-d:\meta-inf\george\ubb\an3\lftc\labs\lab3\symtbl\symtbl\main.cpp(87): warning C4018: '<': signed/unsigned mismatch
-d:\meta-inf\george\ubb\an3\lftc\labs\lab3\symtbl\symtbl\main.cpp(123): warning C4018: '<': signed/unsigned mismatch
-d:\meta-inf\george\ubb\an3\lftc\labs\lab3\symtbl\symtbl\main.cpp(163): warning C4018: '<': signed/unsigned mismatch
-  SymTbl.vcxproj -> D:\META-INF\George\ubb\An3\LFTC\labs\Lab3\SymTbl\Debug\SymTbl.exe
+﻿  Scanner.cpp
+d:\meta-inf\george\ubb\an3\lftc\labs\lab3\symtbl - copy\symtbl\scanner.cpp(115): warning C4018: '<': signed/unsigned mismatch
+d:\meta-inf\george\ubb\an3\lftc\labs\lab3\symtbl - copy\symtbl\scanner.cpp(139): warning C4553: '==': result of expression not used; did you intend '='?
+d:\meta-inf\george\ubb\an3\lftc\labs\lab3\symtbl - copy\symtbl\scanner.cpp(147): warning C4553: '==': result of expression not used; did you intend '='?
+d:\meta-inf\george\ubb\an3\lftc\labs\lab3\symtbl - copy\symtbl\scanner.cpp(378): warning C4018: '<': signed/unsigned mismatch
+  SymTbl.vcxproj -> D:\META-INF\George\ubb\An3\LFTC\labs\Lab3\SymTbl - Copy\Debug\SymTbl.exe

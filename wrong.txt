@@ -1,0 +1,59 @@
+let 1x : integer;  
+let y : integer; 
+read("Give x=" ,   x ); 
+read ("Give y =",y); 
+let res : integer; 
+
+let r :  integer; 
+while (y!=-3) 
+{ 
+  r = x%y; 
+  x=y; 
+  y=r; 
+} 
+res=x;
+write("The result is",res); 
+
+
+
+
+
+let result : integer;
+result = 0; 
+
+let array : integer[] = {0341, 2, 3, 4 ,5 , 6, 7, 8 ,9};
+ 
+for (integer i = 0; i < 9; i=i+1) 
+{ 
+	result = result + array[i]; 
+} 
+ 
+write(result); 
+
+
+
+
+let a : integer;
+let b : integer;
+let c : integer;
+
+let printMessage : string;
+
+printMessage = "is the biggest number; 
+ 
+read("Give a=", a);
+read("Give b=", b);
+read("Give c=", c);
+
+if (a > b && a > c)  
+ { 
+	write(printMessage,a); 
+} 
+elif (b > a && b > c)  
+{ 
+write(printMessage,b); 
+} 
+else  
+{ 
+write(printMessage,c); 
+}
