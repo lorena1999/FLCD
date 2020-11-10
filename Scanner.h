@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <vector>
 #include "HashTable.h"
+#include "FA.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ private:
 	string rtrim(const std::string& s); // right trim spaces
 	vector<pair<string, int>> pif;
 	HashTable hashy; // symTable
+	FA fa_ids, fa_ints, fa_reals;
 	
 public:
 	int line_counter;

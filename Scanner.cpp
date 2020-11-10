@@ -9,7 +9,6 @@
 #include <map>
 #include <cstdlib>
 #include <algorithm>
-#include<regex>
 #include <regex>
 #include "Scanner.h"
 
@@ -18,6 +17,9 @@ using namespace std;
 Scanner::Scanner()
 {
 	line_counter = 0;
+	fa_ids.read_from_file("ids.txt");
+	fa_ints.read_from_file("nums.txt");
+	fa_reals.read_from_file("reals.txt");
 }
 
 string Scanner::convertToString(char *a, int size)
@@ -250,12 +252,8 @@ void Scanner::scan()
 					}
 
 					string nr = "";
-					regex str_expr("0|([1-9][0-9]*)"); // regex for integer constant corrections
-					regex str_expr_double("^[0-9]+(\\.[0-9]+)+$"); // regex for double constants corrections
-
-					if (regex_match(s, str_expr) || regex_match(s, str_expr_double))
-					{
-						cout << "FACE MATCH "<<s << endl;
+					if (fa_ints.checkSequence(s) || fa_reals.checkSequence(s))
+						{
 						if (sign != "none") // check if it has sign
 							nr = sign + s;
 						else
@@ -298,18 +296,14 @@ void Scanner::scan()
 				if (third_try == false && added2 == false && s != "" && started == false && added2 == false && delim_used != '"' && delim_used != '\'')
 				{
 
-					regex str_expr("0[0-9][0-9]*"); // regex for incorrectness of an integer
-
-					if (regex_match(s, str_expr)) // if matches => number starts with 0 and has more than one digit => error
+					if(s[0]=='0')
 					{
 						cout << "Lexical error on line " << line_counter << endl;
-						cout << "Details: integer cannot start with 0 " << endl;
+						cout << "Details: number cannot start with 0 " << endl;
 						return;
 					}
 
-					regex str_expr_2("[0-9][a-zA-Z0-9_]*"); // regex for incorrectness of an identifier
-
-					if (regex_match(s, str_expr_2)) // if match => identifier starts with digit => error
+					if(!fa_ids.checkSequence(s))
 					{
 						cout << "Lexical error on line " << line_counter << endl;
 						cout << "Details: identifier cannot start with digit " << endl;

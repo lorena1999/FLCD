@@ -1,4 +1,4 @@
-let 1x : integer;  
+let x : integer;  
 let y : integer;
 
 read("Give x= ",   x ); 
@@ -6,7 +6,7 @@ read ("Give y =",y);
 let res : integer; 
 
 let r :  integer; 
-while (y!=-3) 
+while (y!=3)
 { 
   r = x%y; 
   x=y; 
