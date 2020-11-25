@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict
-
+from Production import Production
 
 class Grammar:
     # <editor-fold desc="Constructors">
@@ -10,6 +10,52 @@ class Grammar:
         self.Term = Term
         self.Prod = Prod
         self.Q0 = Q0
+        self.cuteProductions = []
+        self.makeCuteProduction()
+
+    def getProductions(self):
+        return self.cuteProductions
+
+    def getProd(self):
+        return self.Prod
+
+    def makeCuteProduction(self):
+        for key , value in self.Prod.items ():
+            newVals = []
+            for v in value:
+                newVals.append ( v.split () )
+            self.cuteProductions.append(Production ( key , newVals ))
+
+    def getProductionsContainingNonTerminal(self, nonterminal):
+        productionsForNonTerminal = []
+        for p in self.cuteProductions:
+            for rl in p.getRules():
+                idx=-1
+                for i in range(len(rl)):
+                    if rl[i]==nonterminal:
+                        idx=i
+                if idx!=-1:
+                    productionsForNonTerminal.append(p)
+        return productionsForNonTerminal
+
+    def getProductionsForNonterminal(self, nonterminal):
+        productionsForNonterminal = []
+        for p in self.cuteProductions:
+            if p.getStart() == nonterminal:
+                productionsForNonterminal.append(p)
+        return productionsForNonterminal
+
+    def getStartingSymbol(self):
+        return self.Q0
+
+    def getNonTerm(self):
+        return self.NonTerm
+
+    def getTerm(self):
+        return self.Term
+
+    def getProd(self):
+        return self.Prod
 
     @classmethod
     def read_from_file(cls, filename: str):
@@ -38,7 +84,7 @@ class Grammar:
     def _validate_params(NonTerm: set, Term: set, Prod: dict, Q0: str):
         # Nonterm, Term, and the keys and values of Prod are already guaranteed
         #     to be unique by using sets and dictionaries
-        pattern = re.compile('^[A-Za-z0-9]+$')
+        pattern = re.compile('^[A-Za-z0-9€]+$')
 
         for elem in NonTerm:
             assert pattern.match(elem), f'An element in NonTerm is invalid: {elem}!'
@@ -65,6 +111,7 @@ class Grammar:
 
     def _pretty_print_all_Prod(self):
         temporary_str_Prod = []
+
         for key, value in self.Prod.items():
             temporary_str_Prod.append(f'\t{key} -> {{ {" | ".join(value)} }}')
         str_Prod = ',\n'.join(temporary_str_Prod)
@@ -102,6 +149,7 @@ class Grammar:
                '>'
         user_choice = input(menu).upper()
         if user_choice == 'X':
+            print('Bye!')
             return ''
         if user_choice not in ['N', 'T', 'ALLP', 'ONEP', 'Q0']:
             return 'Invalid choice! Please choose one of the 5 given inputs!'
