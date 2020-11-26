@@ -26,24 +26,27 @@ class Grammar:
                 newVals.append ( v.split () )
             self.cuteProductions.append(Production ( key , newVals ))
 
-    def getProductionsContainingNonTerminal(self, nonterminal):
-        productionsForNonTerminal = []
-        for p in self.cuteProductions:
-            for rl in p.getRules():
-                idx=-1
-                for i in range(len(rl)):
-                    if rl[i]==nonterminal:
-                        idx=i
-                if idx!=-1:
-                    productionsForNonTerminal.append(p)
-        return productionsForNonTerminal
-
     def getProductionsForNonterminal(self, nonterminal):
         productionsForNonterminal = []
         for p in self.cuteProductions:
             if p.getStart() == nonterminal:
                 productionsForNonterminal.append(p)
         return productionsForNonterminal
+
+    def getKeysProd(self):
+        res = set()
+        for p in self.cuteProductions:
+            res.add(p.getStart())
+        return res
+
+    def getProductionContainingNonterminal(self, nt):
+        productionsContainingNt = []
+        for p in self.cuteProductions:
+            rls = p.getRules()
+            for r in rls:
+                if nt in r:
+                    productionsContainingNt.append(p)
+        return productionsContainingNt
 
     def getStartingSymbol(self):
         return self.Q0

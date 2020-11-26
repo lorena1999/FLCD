@@ -30,7 +30,7 @@ class UI:
         if option==0:
             self.start()
         elif option==1:
-            nonTerm = ', '.join(self._program.getGrammar().getNonTerm())
+            nonTerm = ', '.join(self._program.getNonTerminals())
             print(f'NonTerm = {{{nonTerm}}}')
             self.fileMenuGrammar()
         elif option==2:
