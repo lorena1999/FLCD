@@ -14,6 +14,7 @@ class Parser:
     def startMyFollow(self):
         startSym = self._grammar.getStartingSymbol()
         self._followSet[startSym]=set("$")
+
         for nt in self._grammar.getNonTerm():
             if nt != startSym:
                 self._followSet[nt]=set()
@@ -22,27 +23,37 @@ class Parser:
             self.myFollow(nt)
 
     def myFollow(self, nt):
+        if nt==self._grammar.getStartingSymbol():
+            return
         for p in self._grammar.getProductionContainingNonterminal(nt):
             for rhs in p.getRules():
                 if nt in rhs:
                     idx = rhs.index(nt)
                     idx+=1
-                    if idx==len(rhs):
+                    if idx==len(rhs): # then we found nt on the first position
                         self.myFollow(p.getStart())
                         for t in self._followSet[p.getStart()]:
                             self._followSet[nt].add(t)
-                    else:
-                        nextSym = rhs[idx]
-                        if "€" not in self._firstSet[nextSym]:
-                            for t in self._firstSet[nextSym]:
-                                self._followSet[nt].add(t)
+                    else: # not in the end
+                        temporary = []
+                        for j in range(idx, len(rhs)):
+                            nextSym = rhs[j]
+                            copy_first_set = set()
+                            for elem in self._firstSet[nextSym]:
+                                copy_first_set.add(elem)
+                            temporary.append(copy_first_set)
+                        res = self.concatForFirst(temporary)
+                        if "€" not in res:
+                            for r in res:
+                                self._followSet[nt].add(r)
                         else:
-                            for t in self._firstSet[nextSym]:
-                                if t!="€":
-                                    self._followSet[nt].add(t)
+                            res.remove("€")
+                            for r in res:
+                                self._followSet[nt].add(r)
                             self.myFollow(p.getStart())
                             for t in self._followSet[p.getStart()]:
                                 self._followSet[nt].add(t)
+
 
     def startMyFirst(self):
         for t in self._grammar.getTerm(): # init the terminals with themselves
@@ -80,8 +91,10 @@ class Parser:
         temporary = []
         for p in self._grammar.getProductionsForNonterminal(nt):
             for rhs in p.getRules():
+
                 for elem in rhs:
                     if elem in self._grammar.getTerm() and elem!="€":
+
                         self._firstSet[nt].add(elem)
                         temporary.append(set(elem))
                     elif elem=="€":
