@@ -3,7 +3,7 @@ from Program import Program
 from UI import UI
 
 if __name__ == '__main__':
-    grammar = Grammar.read_from_file('g2.txt')
+    grammar = Grammar.read_from_file('g3.txt')
     program = Program(grammar)
     ui = UI(program)
     ui.start()

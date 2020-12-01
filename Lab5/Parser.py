@@ -53,6 +53,9 @@ class Parser:
             self.myFirst(nt)
 
     def concatForFirst(self, temp):
+        if len(temp)==1:
+            return temp[0]
+
         res = set()
 
         has=True
@@ -79,6 +82,7 @@ class Parser:
             for rhs in p.getRules():
                 for elem in rhs:
                     if elem in self._grammar.getTerm() and elem!="€":
+                        self._firstSet[nt].add(elem)
                         temporary.append(set(elem))
                     elif elem=="€":
                         self._firstSet[nt].add("€")
@@ -87,7 +91,6 @@ class Parser:
                         self.myFirst(elem)
                         temp = self._firstSet[elem]
                         temporary.append(set(temp))
-
 
             res = self.concatForFirst(temporary)
             for e in res:
