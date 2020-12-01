@@ -52,38 +52,47 @@ class Parser:
         for nt in self._grammar.getNonTerm():
             self.myFirst(nt)
 
+    def concatForFirst(self, temp):
+        res = set()
+
+        has=True
+
+        for i in range(len(temp)-1):
+            for j in range(len(temp)):
+                if "€" not in temp[i] or "€" not in temp[j]:
+                    has=False
+                for elem1 in temp[i]:
+                    for elem2 in temp[j]:
+                        if elem1=="€" and elem2!="€":
+                            res.add(elem2)
+                        elif elem1!="€":
+                            res.add(elem1)
+        if has:
+            res.add("€")
+
+        return res
+
+
     def myFirst(self, nt):
+        temporary = []
         for p in self._grammar.getProductionsForNonterminal(nt):
             for rhs in p.getRules():
-                broke=False
                 for elem in rhs:
                     if elem in self._grammar.getTerm() and elem!="€":
-                        self._firstSet[nt].add(elem)
-                        broke=True
-                        break
+                        temporary.append(set(elem))
                     elif elem=="€":
-                        continue
+                        self._firstSet[nt].add("€")
+                        temporary.append(set("€"))
                     else:
                         self.myFirst(elem)
                         temp = self._firstSet[elem]
-                        if len(temp)>1:
-                            for t in temp:
-                                if t!="€":
-                                    self._firstSet[nt].add(t)
-                                    broke=True
-                                    break
-                        if len(temp)==1:
-                            temp = list(temp)
-                            if temp[0]!="€":
-                                self._firstSet[nt].add(temp[0])
-                                broke=True
-                                break
-                            else:
-                                continue
+                        temporary.append(set(temp))
 
-                        broke=True
-                if broke==False:
-                    self._firstSet[nt].add("€")
+
+            res = self.concatForFirst(temporary)
+            for e in res:
+                self._firstSet[nt].add ( e )
+
 
 
     def getFirstSet(self):

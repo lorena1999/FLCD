@@ -1,0 +1,3 @@
+S,X,Y,Z
+a,b,c,€
+S->X Y Z; X->a|Y b|€; Y->c|€; Z->a|€

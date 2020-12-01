@@ -1,3 +1,3 @@
-S,X,Y,Z
+S,X,Y
 a,b,c,€
-S->X Y Z; X->a|Y b|€; Y->c|€; Z->a|€
+S->X Y; X->b|€; Y->c|€
