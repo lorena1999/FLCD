@@ -42,7 +42,7 @@ class Parser:
                             for elem in self._firstSet[nextSym]:
                                 copy_first_set.add(elem)
                             temporary.append(copy_first_set)
-                        res = self.concatForFirst(temporary)
+                        res = self.reduceToSet(temporary)
                         if "€" not in res:
                             for r in res:
                                 self._followSet[nt].add(r)
@@ -63,30 +63,27 @@ class Parser:
         for nt in self._grammar.getNonTerm():
             self.myFirst(nt)
 
-    def concatForFirst(self, temp):
+    def reduceToSet(self, temp):
         if len(temp)==1:
             return temp[0]
 
         res = set()
 
-        has=True
-        print(temp)
+        hasEpsilon=True
 
         for i in range(len(temp)-1):
             for j in range(i+1,len(temp)):
                 if "€" not in temp[i] or "€" not in temp[j]:
-                    has=False
+                    hasEpsilon=False
                 for elem1 in temp[i]:
                     for elem2 in temp[j]:
                         if elem1=="€" and elem2!="€":
                             res.add(elem2)
                         elif elem1!="€":
                             res.add(elem1)
-        if has:
+        if hasEpsilon:
             res.add("€")
-
         return res
-
 
     def myFirst(self, nt):
         for p in self._grammar.getProductionsForNonterminal(nt):
@@ -105,7 +102,7 @@ class Parser:
                         temporary.append(set(temp))
 
 
-                res = self.concatForFirst(temporary)
+                res = self.reduceToSet(temporary)
                 for e in res:
                     self._firstSet[nt].add ( e )
 
