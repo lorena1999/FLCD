@@ -57,9 +57,6 @@ class Grammar:
     def getTerm(self):
         return self.Term
 
-    def getProd(self):
-        return self.Prod
-
     @classmethod
     def read_from_file(cls, filename: str):
         with open(filename, 'r') as infile:

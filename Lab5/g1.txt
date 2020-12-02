@@ -1,0 +1,3 @@
+S,A,B,C
+b,a,d,g,h,€
+S->A C B|C b b|B a; A->d|B C; B->g|€; C->h|€

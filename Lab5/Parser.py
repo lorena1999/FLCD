@@ -30,7 +30,7 @@ class Parser:
                 if nt in rhs:
                     idx = rhs.index(nt)
                     idx+=1
-                    if idx==len(rhs): # then we found nt on the first position
+                    if idx==len(rhs): # then we found nt on the last position
                         self.myFollow(p.getStart())
                         for t in self._followSet[p.getStart()]:
                             self._followSet[nt].add(t)
@@ -70,9 +70,10 @@ class Parser:
         res = set()
 
         has=True
+        print(temp)
 
         for i in range(len(temp)-1):
-            for j in range(len(temp)):
+            for j in range(i+1,len(temp)):
                 if "€" not in temp[i] or "€" not in temp[j]:
                     has=False
                 for elem1 in temp[i]:
@@ -88,13 +89,11 @@ class Parser:
 
 
     def myFirst(self, nt):
-        temporary = []
         for p in self._grammar.getProductionsForNonterminal(nt):
             for rhs in p.getRules():
-
+                temporary = []
                 for elem in rhs:
                     if elem in self._grammar.getTerm() and elem!="€":
-
                         self._firstSet[nt].add(elem)
                         temporary.append(set(elem))
                     elif elem=="€":
@@ -105,9 +104,11 @@ class Parser:
                         temp = self._firstSet[elem]
                         temporary.append(set(temp))
 
-            res = self.concatForFirst(temporary)
-            for e in res:
-                self._firstSet[nt].add ( e )
+
+                res = self.concatForFirst(temporary)
+                for e in res:
+                    self._firstSet[nt].add ( e )
+
 
 
 
