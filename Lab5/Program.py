@@ -1,18 +1,18 @@
 from Parser import Parser
 
+
 class Program:
     def __init__(self, grammar):
         self._parser = Parser(grammar)
 
-# Parser stuff
+    # Parser stuff
     def getFirstSet(self):
         return self._parser.getFirstSet()
 
     def getFollowSet(self):
         return self._parser.getFollowSet()
 
-
-# Grammar stuff
+    # Grammar stuff
     def getGrammar(self):
         return self._parser.getGrammar()
 
@@ -30,4 +30,3 @@ class Program:
 
     def getStartingSymbol(self):
         return self._parser.getGrammar().getStartingSymbol()
-
