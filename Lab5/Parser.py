@@ -7,6 +7,24 @@ ERR = 'ERR'
 POP = 'POP'
 ACC = 'ACC'
 
+class Node:
+    def __init__(self, level, val, parent):
+        self._level = level
+        self._val = val
+        self._parent = parent
+
+    def getLevel(self):
+        return self._level
+
+    def getVal(self):
+        return self._val
+
+    def getParent(self):
+        return self._parent
+
+    def __str__(self):
+        return "Node: "+str(self._val)+","+str(self._level)+","+str(self._parent)+"       "
+
 
 class Parser:
     def __init__(self, gr: Grammar):
@@ -45,9 +63,24 @@ class Parser:
         self.startMyFollow()
         self.generateTable()
 
+    def getAllNodesFromLevelAndParent(self, tree, k, parent):
+        res = []
+        for t in tree:
+            for l in t:
+                if l.getLevel()==k and l.getParent()==parent:
+                    res.append(l)
+        return res
+
+    def printTree(self, tree, current):
+        print("\t"*(current.getLevel()-1)+current.getVal())
+        res = self.getAllNodesFromLevelAndParent(tree, current.getLevel()+1, current.getVal())
+        for r in res:
+            self.printTree(tree, r)
+
     def parseSequence(self, seq):
-        stack = ["$"]
-        stack.append(self._grammar.getStartingSymbol())
+
+        stack = [Node(0,"$","-")]
+        stack.append(Node(1, self._grammar.getStartingSymbol(), "$"))
 
         input = []
 
@@ -60,13 +93,29 @@ class Parser:
 
         actions = []
 
-        while len(input)>1 or len(stack)>0:
-            currentSym = stack[len(stack)-1]
+        tree = []
+        idx=2
+
+        path = []
+        while len(stack)>0:
+            currentNode = stack[len(stack)-1]
             top = input[len(input)-1]
-            prod = self._M[currentSym][top]
+            prod = self._M[currentNode.getVal()][top]
+            if currentNode.getVal()=="$":
+                path.append(stack.pop())
+                continue
             if prod!=ERR:
-                elem = stack.pop()
-                if elem == top:
+                nodeElem = stack.pop()
+                path.append(nodeElem)
+
+                idxE = nodeElem.getLevel()
+
+                if nodeElem.getVal() == top:
+                    copy_list = []
+                    for c in path:
+                        copy_list.append ( c )
+                        path = []
+                    tree.append ( copy_list )
                     input.pop()
                     actions.append(POP)
                 else:
@@ -79,12 +128,21 @@ class Parser:
 
                     for p in new_prods:
                         if p!="$":
-                            stack.append(p)
+                            stack.append(Node(idxE+1,p,currentNode.getVal()))
+                        else:
+                            stack.append(Node(idxE+1,p,currentNode.getVal()))
+                    idx+=1
             else:
                 print("Invalid sequence!")
                 return
 
+
         print("Sequence accepted!")
+        for t in tree:
+            for l in t:
+                if l.getVal()==self._grammar.getStartingSymbol() and l.getLevel()==1:
+                    self.printTree(tree, l)
+
 
     def generateTable(self):
         for row in (self._grammar.getNonTerm() | self._grammar.getTerm() | set('$')):
