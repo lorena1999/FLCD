@@ -16,24 +16,75 @@ class Parser:
         self._M = {}
         self.generateSets()
 
-        print ( '\t' , end='' )
-        for column_header in (self._grammar.getTerm () | self._grammar.getNonTerm ()):
-            print ( column_header , end='\t\t\t' )
+        cell_max_length = 0
+        for _ , outer in self._M.items ():
+            for _ , inner in outer.items ():
+                if len ( str ( inner ) ) > cell_max_length:
+                    cell_max_length = len ( str ( inner ) )
+
+        columns_headers = list ( self._grammar.getTerm () - set ( '$' ) ) + ['$']
+        row_headers = list ( self._grammar.getNonTerm () ) + list (
+            self._grammar.getTerm () - set ( '$' ) ) + ['$']
+
+        cell_max_length += 2
+
+        print ( '   | ' , end='' )
+        for column_header in columns_headers:
+            print ( column_header , end=' ' * (cell_max_length - 1) )
         print ()
-        for row in (self._grammar.getTerm () | self._grammar.getNonTerm ()):
-            print ( row , end='\t' )
-            for cell in (self._grammar.getTerm () | self._grammar.getNonTerm ()):
-                temp = self._M[row][cell]
-                if temp == 'ERR' or temp == 'POP' or temp == 'ACC':
-                    print ( temp , end='\t\t\t' )
-                else:
-                    print ( temp , end='  ' )
+        print ( '---+-' + '-' * cell_max_length * len ( columns_headers ) )
+        for row in row_headers:
+            print ( row , end='  | ' )
+            for column in columns_headers:
+                print ( f'{str ( self._M[row][column] ):<{cell_max_length}}' , end='' )
             print ()
+        print ( '\n' )
 
     def generateSets(self):
         self.startMyFirst()
         self.startMyFollow()
         self.generateTable()
+
+    def parseSequence(self, seq):
+        stack = ["$"]
+        stack.append(self._grammar.getStartingSymbol())
+
+        input = []
+
+        for c in range(len(seq)):
+            input.append(seq[c])
+
+        input.append("$")
+
+        input.reverse()
+
+        actions = []
+
+        while len(input)>1 or len(stack)>0:
+            currentSym = stack[len(stack)-1]
+            top = input[len(input)-1]
+            prod = self._M[currentSym][top]
+            if prod!=ERR:
+                elem = stack.pop()
+                if elem == top:
+                    input.pop()
+                    actions.append(POP)
+                else:
+                    new_prods = []
+                    for i in range(len(prod[1])):
+                        new_prods.append(prod[1][i])
+                    new_prods.reverse()
+
+                    actions.append(prod)
+
+                    for p in new_prods:
+                        if p!="$":
+                            stack.append(p)
+            else:
+                print("Invalid sequence!")
+                return
+
+        print("Sequence accepted!")
 
     def generateTable(self):
         for row in (self._grammar.getNonTerm() | self._grammar.getTerm() | set('$')):

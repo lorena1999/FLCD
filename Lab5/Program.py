@@ -12,6 +12,9 @@ class Program:
     def getFollowSet(self):
         return self._parser.getFollowSet()
 
+    def getParseSequence(self, seq):
+        self._parser.parseSequence(seq)
+
     # Grammar stuff
     def getGrammar(self):
         return self._parser.getGrammar()

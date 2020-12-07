@@ -16,6 +16,7 @@ class Grammar:
         self.makeCuteProduction()
 
 
+
     def getProductions(self):
         return self.cuteProductions
 

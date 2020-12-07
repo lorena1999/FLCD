@@ -57,10 +57,14 @@ class UI:
         else:
             self.fileMenuGrammar()
 
+    def parseSequence(self, seq):
+        self._program.getParseSequence(seq)
+
     def fileMenuParser(self):
         print("0 - Back")
         print("1 - Get FIRST set")
         print("2 - Get FOLLOW set")
+        print("3 - Parse sequence: ")
 
         option = int(input())
         if option == 0:
@@ -72,6 +76,10 @@ class UI:
         elif option == 2:
             for key, val in self._program.getFollowSet().items():
                 self.displaySet(key, val)
+            self.fileMenuParser()
+        elif option == 3:
+            seq = input()
+            self.parseSequence(seq)
             self.fileMenuParser()
         else:
             self.fileMenuParser()
