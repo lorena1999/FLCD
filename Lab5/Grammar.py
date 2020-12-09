@@ -68,8 +68,12 @@ class Grammar:
             lines = [line.strip('\n') for line in lines]
             NonTerm = set(lines[0].split(','))
             Term = set(lines[1].split(','))
+            if '' in Term:
+                Term.remove('')
+                Term.add(',')
 
             Productions_list = [re.split('->', prod_group) for prod_group in lines[2].split('; ')]
+            print(Productions_list)
             Productions_list = [[prod_group[0], prod_group[1].split('|')] for prod_group in
                                 Productions_list]
             Productions_dict = defaultdict(set)
@@ -93,7 +97,8 @@ class Grammar:
             for elem in rhs:
                 elem_split = elem.split(' ')
                 for es in elem_split:
-                    assert (es in NonTerm) or (
+                    if es:
+                        assert (es in NonTerm) or (
                             es in Term), f'An element in the rhs of the Production is invalid: {es}!'
 
     # <editor-fold desc="Pretty Print Helper Functions">

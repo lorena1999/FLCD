@@ -1,3 +1,3 @@
-S,X,Y,Z
-a,b,c,€
-S->X Y Z; X->b|€; Y->c|€; Z->a|b|€
+program,relation,type,expression,condition,declaration,assign_stmt,IO_stmt,simpl_stmt,stmt_list,stmt,cmpd_stmt,if_stmt,while_stmt,struct_stmt,declaration_list,A,B,C,D,E,F,G,H,term,decl1,decl_opt,stmt_opt,const_opt
+id,const,<,<=,==,>,>=,boolean,integer,double,char,+,-,*,/,(,),let,:,[,],{,},=,;, ,read,,,write,$,{,},else,if,while
+relation-><|==|>; type->boolean|integer|double|char; condition->expression relation expression; declaration->decl1 const_opt ;; assign_stmt->id = expression ;; IO_stmt->read ( id ) ;|write ( term ) ;; simpl_stmt->assign_stmt|IO_stmt; stmt_list->stmt stmt_opt; cmpd_stmt->{ stmt_list }; if_stmt->if condition cmpd_stmt; while_stmt->while ( condition ) cmpd_stmt; struct_stmt->cmpd_stmt|if_stmt|while_stmt; stmt->assign_stmt|IO_stmt|struct_stmt; declaration_list->declaration decl_opt|stmt_list; program->declaration_list ; expression->B A; A->+ B A|$; B->D C; C->* D C|$; D->F E; E->/ F E|$; F->H G; G->- H G|$; H->( expression )|term; term->const|id; decl1->let id : type; const_opt->[ const ]|$; decl_opt->declaration_list|$; stmt_opt->stmt_list|$

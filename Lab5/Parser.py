@@ -33,7 +33,9 @@ class Parser:
         self._followSet = {}
         self._M = {}
         self.generateSets()
+        self.printTable()
 
+    def printTable(self):
         cell_max_length = 0
         for _ , outer in self._M.items ():
             for _ , inner in outer.items ():
@@ -57,6 +59,7 @@ class Parser:
                 print ( f'{str ( self._M[row][column] ):<{cell_max_length}}' , end='' )
             print ()
         print ( '\n' )
+
 
     def generateSets(self):
         self.startMyFirst()
@@ -82,10 +85,7 @@ class Parser:
         stack = [Node(0,"$","-")]
         stack.append(Node(1, self._grammar.getStartingSymbol(), "$"))
 
-        input = []
-
-        for c in range(len(seq)):
-            input.append(seq[c])
+        input = seq.split(' ')
 
         input.append("$")
 
@@ -100,6 +100,8 @@ class Parser:
         while len(stack)>0:
             currentNode = stack[len(stack)-1]
             top = input[len(input)-1]
+            print(currentNode)
+            print("This is top: "+str(top))
             prod = self._M[currentNode.getVal()][top]
             if currentNode.getVal()=="$":
                 path.append(stack.pop())
@@ -164,6 +166,7 @@ class Parser:
                                 print(f'M[{nonterm}][{term}]')
                                 print(self._M[nonterm][term])
                                 print(nonterm, rhs)
+                                self.printTable()
                                 sys.exit(-1)
                             else:
                                 self._M[nonterm][term] = (nonterm, rhs)
