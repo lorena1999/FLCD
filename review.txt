@@ -1,0 +1,25 @@
+ConfigurationClass -> the state could have been initialized in place instead of element by element ( more efficient )
+		   -> used lists instead of stack objects for the two stacks
+
+PIF.out -> neat 
+
+our.in -> nice syntax
+
+main.py -> menu is commented out on lines 31 - 62
+	-> descendant instead of descendad
+	
+
+Descendand.py -> you could rather try converting "number" directly from the start to integer instead of doing it 8 times in the "another_try" function
+	      -> in python you should use "is True" instead of "== True"
+	      
+Parser.py -> clean validation
+
+grammar.in -> on line 11, for each function argument, after the first, there will be too many paranthesis
+for example:
+( int a ) - one argument 
+( int a , ( int b ) ) - two arguments 
+( int a , ( int b , ( int c ) ) ) - three arguments
+
+
+
+

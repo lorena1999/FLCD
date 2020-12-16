@@ -73,7 +73,6 @@ class Grammar:
                 Term.add(',')
 
             Productions_list = [re.split('->', prod_group) for prod_group in lines[2].split('; ')]
-            print(Productions_list)
             Productions_list = [[prod_group[0], prod_group[1].split('|')] for prod_group in
                                 Productions_list]
             Productions_dict = defaultdict(set)

@@ -33,7 +33,6 @@ class Parser:
         self._followSet = {}
         self._M = {}
         self.generateSets()
-        self.printTable()
 
     def printTable(self):
         cell_max_length = 0
@@ -100,8 +99,6 @@ class Parser:
         while len(stack)>0:
             currentNode = stack[len(stack)-1]
             top = input[len(input)-1]
-            print(currentNode)
-            print("This is top: "+str(top))
             prod = self._M[currentNode.getVal()][top]
             if currentNode.getVal()=="$":
                 path.append(stack.pop())
@@ -138,12 +135,11 @@ class Parser:
                 print("Invalid sequence!")
                 return
 
-
-        print("Sequence accepted!")
         for t in tree:
             for l in t:
-                if l.getVal()==self._grammar.getStartingSymbol() and l.getLevel()==1:
-                    self.printTree(tree, l)
+                if l.getVal () == self._grammar.getStartingSymbol () and l.getLevel () == 1:
+                    self.printTree ( tree , l )
+        print("Sequence accepted!")
 
 
     def generateTable(self):
@@ -166,7 +162,6 @@ class Parser:
                                 print(f'M[{nonterm}][{term}]')
                                 print(self._M[nonterm][term])
                                 print(nonterm, rhs)
-                                self.printTable()
                                 sys.exit(-1)
                             else:
                                 self._M[nonterm][term] = (nonterm, rhs)
