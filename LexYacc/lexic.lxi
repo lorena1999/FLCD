@@ -1,0 +1,53 @@
+%{
+#include <math.h> 
+#include <stdio.h>
+int lines = 0;
+%} 
+%option noyywrap
+
+NUMBER         [-|+]?[1-9][0-9]*|0
+STRING 		^\".*\"$
+CONSTANT       	{NUMBER}
+ID              [a-zA-Z][a-zA-Z0-9]*
+
+%% 
+
+"if" {printf("Reserved word: %s\n", yytext);}
+"while" {printf("Reserved word: %s\n", yytext);}
+"integer" {printf("Reserved word: %s\n", yytext);}
+"string" {printf("Reserved word: %s\n", yytext);}
+"let" {printf("Reserved word: %s\n", yytext);}
+"write" {printf("Reserved word: %s\n", yytext);}
+"read" {printf("Reserved word: %s\n", yytext);} 
+
+":"	{printf( "Separator: %s\n", yytext );}
+";"	{printf( "Separator: %s\n", yytext );}
+","	{printf( "Separator: %s\n", yytext );}
+"."	{printf( "Separator: %s\n", yytext );}
+"+"	{printf( "Operator: %s\n", yytext );}
+"-"	{printf( "Operator: %s\n", yytext );}
+"*"	{printf( "Operator: %s\n", yytext );}
+"="  	{printf( "Operator: %s\n", yytext );}
+"=="  	{printf( "Operator: %s\n", yytext );}
+"/"	{printf( "Operator: %s\n", yytext );}
+"("	{printf( "Separator: %s\n", yytext );}
+")"	{printf( "Separator: %s\n", yytext );}
+"["	{printf( "Separator: %s\n", yytext );}
+"]"	{printf( "Separator: %s\n", yytext );}
+"}" 	{printf( "Separator: %s\n", yytext );}
+"{" 	{printf( "Separator: %s\n", yytext );}
+"<"	{printf( "Operator: %s\n", yytext );}
+">"	{printf( "Operator: %s\n", yytext );}
+
+{ID}    {printf( "Identifier: %s\n", yytext );}
+{CONSTANT} {printf( "Constant: %s\n", yytext);}
+
+[ \t]+	/* elimina spatii */  	{}
+
+[\n]+	{lines++;}
+
+[0-9][a-zA-Z0-9]	{printf("Illegal identifier at line %d\n", lines);}
+		 
+.	{printf("Illegal symbol at line\n");}
+
+%%  
