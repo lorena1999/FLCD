@@ -5,9 +5,9 @@ int lines = 0;
 %} 
 %option noyywrap
 
-NUMBER        [-|+]?[1-9][0-9]*|0
-STRING 		^\".*\"$
-CONSTANT       	{NUMBER}
+NUMBER         0$|[-|+]?[1-9][0-9]*
+STRING 		\"[a-zA-Z0-9]*\"
+CONSTANT       	{NUMBER}|{STRING}
 ID              [a-zA-Z][a-zA-Z0-9]*
 
 %% 
@@ -18,24 +18,29 @@ ID              [a-zA-Z][a-zA-Z0-9]*
 "string" {printf("Reserved word: %s\n", yytext);}
 "let" {printf("Reserved word: %s\n", yytext);}
 "write" {printf("Reserved word: %s\n", yytext);}
-"read" {printf("Reserved word: %s\n", yytext);}
- 
-{ID}    {printf( "Identifier: %s\n", yytext );}
-{CONSTANT} {printf( "Constant: %s\n", yytext);}
+"read" {printf("Reserved word: %s\n", yytext);} 
 
 ":"	{printf( "Separator: %s\n", yytext );}
 ";"	{printf( "Separator: %s\n", yytext );}
 ","	{printf( "Separator: %s\n", yytext );}
 "."	{printf( "Separator: %s\n", yytext );}
-"+"	{printf( "Operator: %s\n", yytext );}
-"*"	{printf( "Operator: %s\n", yytext );}
 
 "-"{NUMBER} {printf("An operator: -\nAn integer: %s\n", yytext + 1);} 
 "-" {printf("An operator: %s\n", yytext);}
 
-"="  	{printf( "Operator: %s\n", yytext );}
-"=="  	{printf( "Operator: %s\n", yytext );}
-"/"	{printf( "Operator: %s\n", yytext );}
+"+"{NUMBER} {printf("An operator: +\nAn integer: %s\n", yytext + 1);}
+"+" {printf("An operator: %s\n", yytext);}
+
+"*"{NUMBER} {printf("An operator: *\nAn integer: %s\n", yytext + 1);}
+"*" {printf("An operator: %s\n", yytext);}
+
+"/"{NUMBER} {printf("An operator: /\nAn integer: %s\n", yytext + 1);}
+"/" {printf("An operator: %s\n", yytext);}
+
+"="{NUMBER} {printf("An operator: =\nAn integer: %s\n", yytext + 1);}
+"=" {printf("An operator: %s\n", yytext);}
+
+"=="	{printf( "Operator: %s\n", yytext );}
 "("	{printf( "Separator: %s\n", yytext );}
 ")"	{printf( "Separator: %s\n", yytext );}
 "["	{printf( "Separator: %s\n", yytext );}
@@ -45,11 +50,16 @@ ID              [a-zA-Z][a-zA-Z0-9]*
 "<"	{printf( "Operator: %s\n", yytext );}
 ">"	{printf( "Operator: %s\n", yytext );}
 
+
+{ID}    {printf( "Identifier: %s\n", yytext );}
+{CONSTANT} {printf( "Constant: %s\n", yytext);}
+
 [ \t]+	/* elimina spatii */  	{}
 
 [\n]+	{lines++;}
 
-[0-9][a-zA-Z0-9]	{printf("Illegal identifier at line %d\n", lines);}
+[0][0-9]+ 	{printf("Illegal number at line %d\n", lines);}
+[0-9]+[a-zA-Z][a-zA-Z0-9]*	{printf("Illegal identifier at line %d\n", lines);}
 		 
 .	{printf("Illegal symbol at line\n");}
 

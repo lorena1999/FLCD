@@ -1,0 +1,74 @@
+%{
+
+#include "y.tab.h"
+int yyerror(char *errormsg);
+int lines=0;
+
+%}
+
+NUMBER        [-|+]?[1-9][0-9]*|0
+STRING          ^\".*\"$
+CONSTANT        {NUMBER}
+ID              [a-zA-Z][a-zA-Z0-9]*
+
+%%
+
+"if" {return IF;}
+"while" {return WHILE;}
+"integer" {return INTEGER;}
+"string" {return STRING;}
+"let" {return LET;}
+"write" {return WRITE;}
+"read" {return READ;}
+
+{ID}    {return ID;}
+{CONSTANT} {return CONST;}
+
+":"     {return COLON;}
+";"     {return SEMICOLON;}
+","     {return COMMA;}
+"."     {return DOT;}
+"+"     {return PLUS;}
+"*"     {return MULTIPLY;}
+
+"-"{NUMBER} {return CONST;}
+"-" {return MINUS;}
+
+"="     {return EQUAL;}
+"/"     {return DIVISION;}
+
+"("     {return LEFT_ROUND_PARANTHESIS;}
+")"     {return RIGHT_ROUND_PARANTHESIS;}
+"["     {return LEFT_SQUARE_PARANTHESIS;}
+"]"     {return RIGHT_SQUARE_PARANTHESIS;}
+"{"     {return LEFT_CURLY_BRACKET;}
+"}"     {return RIGHT_CURLY_BRACKET;}
+"<"     {return LESS_THAN;}
+">"     {return GREATER_THAN;}
+
+[ \t]+  /* elimina spatii */    {}
+
+[\n]+   {lines++;}
+
+[0-9][a-zA-Z0-9]        {printf("Illegal identifier at line %d\n", lines);}
+
+.       {printf("Illegal symbol at line\n");}
+
+%%
+
+int main(void)
+{
+	yyparse();
+	return 0;
+}
+
+int yywrap(void)
+{
+	return 0;
+}
+
+int yyerror(char *errormsg)
+{
+	fprintf(stderr, "%s\n", errormsg);
+	exit(1);
+}
