@@ -1415,8 +1415,182 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2:
+#line 45 "hello.y"
+      {printf("eps\n");}
+#line 1422 "y.tab.c"
+    break;
 
-#line 1420 "y.tab.c"
+  case 3:
+#line 46 "hello.y"
+                                        {printf("declaraion\n");}
+#line 1428 "y.tab.c"
+    break;
+
+  case 4:
+#line 47 "hello.y"
+                          {printf("decl1\n");}
+#line 1434 "y.tab.c"
+    break;
+
+  case 6:
+#line 48 "hello.y"
+                        {printf("type\n");}
+#line 1440 "y.tab.c"
+    break;
+
+  case 8:
+#line 49 "hello.y"
+                                                                         {printf("const_opt\n");}
+#line 1446 "y.tab.c"
+    break;
+
+  case 10:
+#line 50 "hello.y"
+                                  {printf("decl_opt\n");}
+#line 1452 "y.tab.c"
+    break;
+
+  case 11:
+#line 51 "hello.y"
+                          {printf("stmt_list\n");}
+#line 1458 "y.tab.c"
+    break;
+
+  case 14:
+#line 52 "hello.y"
+                                           {printf("stmt\n");}
+#line 1464 "y.tab.c"
+    break;
+
+  case 16:
+#line 53 "hello.y"
+                           {printf("stmt_opt\n");}
+#line 1470 "y.tab.c"
+    break;
+
+  case 17:
+#line 54 "hello.y"
+                                            {printf("assign_stmt\n");}
+#line 1476 "y.tab.c"
+    break;
+
+  case 18:
+#line 55 "hello.y"
+                 {printf("expression\n");}
+#line 1482 "y.tab.c"
+    break;
+
+  case 20:
+#line 56 "hello.y"
+                   {printf("A\n");}
+#line 1488 "y.tab.c"
+    break;
+
+  case 21:
+#line 57 "hello.y"
+        {printf("B\n");}
+#line 1494 "y.tab.c"
+    break;
+
+  case 23:
+#line 58 "hello.y"
+                       {printf("C\n");}
+#line 1500 "y.tab.c"
+    break;
+
+  case 24:
+#line 59 "hello.y"
+        {printf("D\n");}
+#line 1506 "y.tab.c"
+    break;
+
+  case 26:
+#line 60 "hello.y"
+                       {printf("E\n");}
+#line 1512 "y.tab.c"
+    break;
+
+  case 27:
+#line 61 "hello.y"
+        {printf("F\n");}
+#line 1518 "y.tab.c"
+    break;
+
+  case 29:
+#line 62 "hello.y"
+                    {printf("G\n");}
+#line 1524 "y.tab.c"
+    break;
+
+  case 31:
+#line 63 "hello.y"
+                                                                     {printf("H\n");}
+#line 1530 "y.tab.c"
+    break;
+
+  case 33:
+#line 64 "hello.y"
+                  {printf("term\n");}
+#line 1536 "y.tab.c"
+    break;
+
+  case 36:
+#line 65 "hello.y"
+                                               {printf("struct_stmt\n");}
+#line 1542 "y.tab.c"
+    break;
+
+  case 37:
+#line 66 "hello.y"
+                                                             {printf("cmpd_stmt\n");}
+#line 1548 "y.tab.c"
+    break;
+
+  case 38:
+#line 67 "hello.y"
+                                                                                {printf("if_stmt\n");}
+#line 1554 "y.tab.c"
+    break;
+
+  case 39:
+#line 68 "hello.y"
+                                           {printf("condition\n");}
+#line 1560 "y.tab.c"
+    break;
+
+  case 41:
+#line 69 "hello.y"
+                                    {printf("relation\n");}
+#line 1566 "y.tab.c"
+    break;
+
+  case 42:
+#line 70 "hello.y"
+                                                                                      {printf("while_stmt\n");}
+#line 1572 "y.tab.c"
+    break;
+
+  case 44:
+#line 71 "hello.y"
+                                                                                                                                                 {printf("IO_stmt\n");}
+#line 1578 "y.tab.c"
+    break;
+
+  case 45:
+#line 72 "hello.y"
+                           {printf("program\n");}
+#line 1584 "y.tab.c"
+    break;
+
+  case 47:
+#line 73 "hello.y"
+                                                    {printf("declaration_list\n");}
+#line 1590 "y.tab.c"
+    break;
+
+
+#line 1594 "y.tab.c"
 
       default: break;
     }
